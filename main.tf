@@ -55,6 +55,42 @@ resource "aws_security_group" "nats_sg" {
     protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 4248
+    to_port     = 4248
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 5248
+    to_port     = 5248
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 6248
+    to_port     = 6248
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
 resource "aws_key_pair" "tf-key-pair" {
@@ -85,10 +121,10 @@ resource "aws_instance" "nats_server" {
 
   user_data = <<-EOF
               #!/bin/bash
-              curl -O https://github.com/nats-io/nats-server/releases/download/v2.6.0/nats-server-v2.6.0-linux-amd64.zip
-              unzip nats-server-v2.6.0-linux-amd64.zip
+              wget -O archive.zip https://github.com/nats-io/nats-server/releases/download/v2.6.0/nats-server-v2.6.0-linux-amd64.zip
+              unzip archive.zip
               chmod +x nats-server-v2.6.0-linux-amd64/nats-server
-              ./nats-server-v2.6.0-linux-amd64/nats-server -c /etc/nats/nats-server.conf
+              sudo mv nats-server-v2.6.0-linux-amd64/nats-server /usr/bin
               EOF
 }
 
