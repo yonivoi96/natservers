@@ -3,6 +3,21 @@
 In the project I've created a setting for deploying a cluster of 3 servers (using terraform) that will serve 
 as nats-servers and make sure that the connection between them can be established.
 
+## Requirements
+
+Before you begin, ensure you have the following:
+
+* Python 3: You'll need Python 3 installed on your system to run the testing script.
+
+* Terraform: Make sure you have Terraform installed on your machine. 
+
+* AWS Access Key and Secret Key: Configure your AWS access_key and secret_key to authenticate with your AWS account.
+
+* Python Libraries: Install the required Python libraries listed in the `requirements.txt` file by running the following command:
+  
+
+      pip3 install -r requirements.txt
+
 ## Components
 
 ### Main.tf
