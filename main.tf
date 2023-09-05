@@ -127,16 +127,3 @@ resource "aws_instance" "nats_server" {
               sudo mv nats-server-v2.6.0-linux-amd64/nats-server /usr/bin
               EOF
 }
-
-resource "aws_route53_zone" "nats_com" {
-  name = "nats.com"
-}
-
-resource "aws_route53_record" "nats_server_dns" {
-  count   = 3
-  zone_id = aws_route53_zone.nats_com.zone_id
-  name    = "nats-server-${count.index + 1}.nats.com"
-  type    = "A"
-  ttl     = 300
-  records = [aws_instance.nats_server[count.index].public_ip]
-}

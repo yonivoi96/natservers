@@ -48,10 +48,15 @@ def check_logs(server_public_ip):
         stdin, stdout, stderr = ssh_client.exec_command(f"cat {log_file_path}")
         output = stdout.read().decode()
         if "ERR" not in output:
-            print(f"Successfully configured NATS on {server_public_ip} with the seed server")
+            if server_public_ip == seed_public_ip:
+                print(f"Successfully configured NATS on the seed server - {server_public_ip}")
+            else:
+                print(f"Successfully configured NATS on {server_public_ip} with the seed server")
         else:
-            print(
-                f"Error configuring NATS on {server_public_ip}: Unable to establish communication with the seed server")
+            if server_public_ip == seed_public_ip:
+                print(f"Error configuring NATS on {server_public_ip}: Unable to configure the seed server")
+            else:
+                print(f"Error configuring NATS on {server_public_ip}: Unable to establish communication with the seed server")
         ssh_client.close()
     except Exception as e:
         print(f"Error checking logs on {server_public_ip}: {str(e)}")
